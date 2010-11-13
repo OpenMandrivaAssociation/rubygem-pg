@@ -2,7 +2,7 @@
 
 Name:           rubygem-%{oname}
 Version:        0.9.0
-Release:        %mkrel 1
+Release:        %mkrel 3
 Summary:        A Ruby interface to the PostgreSQL RDBMS
 License:        GPLv2+ or Ruby License
 Group:          Development/Ruby
@@ -14,6 +14,7 @@ BuildRequires:  ruby-devel
 Requires:       rubygems
 Requires:       postgresql-server
 Provides:       rubygem(%{oname}) = %{version}
+Obsoletes:      ruby-pg <= %{version}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 
 %description
