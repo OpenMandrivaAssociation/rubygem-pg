@@ -1,62 +1,56 @@
-%define oname pg
+# Generated from pg-0.14.1.gem by gem2rpm5 0.6.7 -*- rpm-spec -*-
+%define	rbname	pg
 
-Name:           rubygem-%{oname}
-Version:        0.9.0
-Release:        %mkrel 3
-Summary:        A Ruby interface to the PostgreSQL RDBMS
-License:        GPLv2+ or Ruby License
-Group:          Development/Ruby
-Source0:        http://rubygems.org/gems/%{oname}-%{version}.gem
-URL:            http://bitbucket.org/ged/ruby-pg/
-BuildRequires:  rubygems
-BuildRequires:  postgresql-devel
-BuildRequires:  ruby-devel
-Requires:       rubygems
-Requires:       postgresql-server
-Provides:       rubygem(%{oname}) = %{version}
-Obsoletes:      ruby-pg <= %{version}
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
+Summary:	Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresql.org/]
+Name:		rubygem-%{rbname}
+
+Version:	0.14.1
+Release:	1
+Group:		Development/Ruby
+License:	GPLv2+ or Ruby
+URL:		https://bitbucket.org/ged/ruby-pg
+Source0:	http://rubygems.org/gems/%{rbname}-%{version}.gem
+BuildRequires:	rubygems 
+BuildRequires:	ruby-devel
+BuildRequires:	pq-devel
 
 %description
-This is the extension library to access a PostgreSQL database from Ruby.
-This library works with PostgreSQL 7.4 and later.
+Pg is the Ruby interface to the {PostgreSQL
+RDBMS}[http://www.postgresql.org/].
+It works with {PostgreSQL 8.3 and later}.
 
+%package	doc
+Summary:	Documentation for %{name}
+Group:		Books/Computer books
+Requires:	%{name} = %{EVRD}
+BuildArch:	noarch
+
+%description	doc
+Documents, RDoc & RI documentation for %{name}.
 
 %prep
+%setup -q
 
 %build
-mkdir -p .%{ruby_gemdir}
-gem install --local --install-dir .%{ruby_gemdir} \
-            --force --rdoc %{SOURCE0}
+%gem_build
 
 %install
-rm -rf %buildroot
-mkdir -p %{buildroot}%{ruby_gemdir}
-cp -rf .%{ruby_gemdir}/* %{buildroot}%{ruby_gemdir}
-rm -rf %{buildroot}%{ruby_gemdir}/gems/%{oname}-%{version}/ext/
-
-# Move Arch dependent libs to sitearchdir
-mkdir -p %{buildroot}%{ruby_sitearchdir}
-mv %{buildroot}%{ruby_gemdir}/gems/%{oname}-%{version}/lib/*.so %{buildroot}%{ruby_sitearchdir}
-
-%clean
-rm -rf %buildroot
+%gem_install
 
 %files
-%defattr(-,root,root,-)
-%dir %{ruby_gemdir}/gems/%{oname}-%{version}/
-%{ruby_gemdir}/gems/%{oname}-%{version}/.require_paths
-%{ruby_gemdir}/gems/%{oname}-%{version}/lib/
-%{ruby_gemdir}/gems/%{oname}-%{version}/spec/
-%{ruby_gemdir}/gems/%{oname}-%{version}/rake/
-%doc %{ruby_gemdir}/doc/%{oname}-%{version}
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/BSD
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/Contributors
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/GPL
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/ChangeLog
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/Rakefile*
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/README*
-%doc %{ruby_gemdir}/gems/%{oname}-%{version}/LICENSE
-%{ruby_gemdir}/cache/%{oname}-%{version}.gem
-%{ruby_gemdir}/specifications/%{oname}-%{version}.gemspec
-%{ruby_sitearchdir}/pg_ext.so
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/ext
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/lib
+%{ruby_gemdir}/gems/%{rbname}-%{version}/ext/*.c
+%{ruby_gemdir}/gems/%{rbname}-%{version}/lib/*.rb
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/lib/pg
+%{ruby_gemdir}/gems/%{rbname}-%{version}/lib/pg/*.rb
+%{ruby_sitearchdir}/*.so
+%{ruby_gemdir}/specifications/%{rbname}-%{version}.gemspec
+
+%files doc
+%{ruby_gemdir}/doc/%{rbname}-%{version}
+%{ruby_gemdir}/gems/%{rbname}-%{version}/*.rdoc
+%{ruby_gemdir}/gems/%{rbname}-%{version}/*.txt
+%{ruby_gemdir}/gems/%{rbname}-%{version}/LICENSE
+%{ruby_gemdir}/gems/%{rbname}-%{version}/POSTGRES
