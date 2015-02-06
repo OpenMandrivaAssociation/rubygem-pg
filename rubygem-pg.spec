@@ -5,7 +5,7 @@ Summary:	Pg is the Ruby interface to the {PostgreSQL RDBMS}[http://www.postgresq
 Name:		rubygem-%{rbname}
 
 Version:	0.14.1
-Release:	1
+Release:	2
 Group:		Development/Ruby
 License:	GPLv2+ or Ruby
 URL:		https://bitbucket.org/ged/ruby-pg
